@@ -22,6 +22,19 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// Content Security Policy configured to allow Glomo Checkout SDK
+app.Use(async (context, next) =>
+{
+    context.Response.Headers.Append("Content-Security-Policy",
+        "default-src 'self'; " +
+        "script-src 'self' 'unsafe-inline' https://glomopay-checkout-sdk.web.app; " +
+        "frame-src 'self' https://glomopay-checkout-sdk.web.app https://*.glomopay.com; " +
+        "connect-src 'self' https://glomopay-checkout-sdk.web.app https://*.glomopay.com; " +
+        "style-src 'self' 'unsafe-inline';");
+    await next();
+});
+
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
