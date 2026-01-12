@@ -179,6 +179,32 @@ public bool VerifySignature(PaymentResponse response)
 - Use **environment variables** for API keys in production
 - The public key can safely be used in client-side code
 
+## Content Security Policy (CSP)
+
+If your application uses Content Security Policy headers, you must allow the Glomo Checkout SDK domains. Add these directives to your CSP:
+
+```csharp
+// In Program.cs
+app.Use(async (context, next) =>
+{
+    context.Response.Headers.Append("Content-Security-Policy",
+        "default-src 'self'; " +
+        "script-src 'self' 'unsafe-inline' https://glomopay-checkout-sdk.web.app; " +
+        "frame-src 'self' https://glomopay-checkout-sdk.web.app https://*.glomopay.com; " +
+        "connect-src 'self' https://glomopay-checkout-sdk.web.app https://*.glomopay.com; " +
+        "style-src 'self' 'unsafe-inline';");
+    await next();
+});
+```
+
+| CSP Directive | Required Domains | Purpose |
+|---------------|------------------|---------|
+| `script-src` | `https://glomopay-checkout-sdk.web.app` | Load checkout SDK JavaScript |
+| `frame-src` | `https://glomopay-checkout-sdk.web.app https://*.glomopay.com` | Checkout modal iframe |
+| `connect-src` | `https://glomopay-checkout-sdk.web.app https://*.glomopay.com` | API calls and source maps |
+
+**Troubleshooting:** If you see "This content is blocked" error, check browser DevTools Console for CSP violation messages.
+
 ## Documentation
 
 - [Glomo Checkout Integration Guide](https://docs.glomopay.com/product-guide/payin/checkout)
