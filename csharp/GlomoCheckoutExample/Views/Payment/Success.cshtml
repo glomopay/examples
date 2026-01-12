@@ -1,0 +1,30 @@
+@model PaymentResultViewModel
+@{
+    ViewData["Title"] = "Payment Successful";
+}
+
+<div class="result-container">
+    <div class="result-card success">
+        <div class="result-icon">
+            <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="32" cy="32" r="32" fill="#10b981"/>
+                <path d="M20 32L28 40L44 24" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+        <h2>Payment Successful!</h2>
+        <p>Thank you for your purchase.</p>
+
+        <div class="payment-details">
+            <div class="detail-row">
+                <span class="label">Payment ID:</span>
+                <span class="value">@Model.PaymentId</span>
+            </div>
+            <div class="detail-row">
+                <span class="label">Order ID:</span>
+                <span class="value">@Model.OrderId</span>
+            </div>
+        </div>
+
+        <a href="/" class="button">Return to Home</a>
+    </div>
+</div>
