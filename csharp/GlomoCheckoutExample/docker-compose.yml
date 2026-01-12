@@ -1,0 +1,10 @@
+services:
+  checkout-example:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - GlomoPay__PublicKey=${GLOMO_PUBLIC_KEY}
+      - GlomoPay__SecretKey=${GLOMO_SECRET_KEY}
+      - GlomoPay__CustomerId=${GLOMO_CUSTOMER_ID}
+      - GlomoPay__ApiBaseUrl=${GLOMO_API_BASE_URL:-https://api.glomopay.com}
